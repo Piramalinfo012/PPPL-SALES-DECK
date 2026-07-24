@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piramal Petroleum - Enterprise Operations Deck</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Scroll Canvas Frame Container -->
+    <div class="canvas-container">
+        <canvas id="scroll-canvas"></canvas>
+        <div class="canvas-overlay"></div>
+    </div>
+
+    <!-- Main Scrollable Overlay Content -->
+    <div class="scroll-wrapper">
+        
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <span class="badge">Enterprise Operations Deck</span>
+                <div class="logo-container">
+                    <img src="logo.jpg" alt="Piramal Logo" class="hero-logo">
+                </div>
+                <h1>Piramal Petroleum<br>Pvt. Ltd.</h1>
+                <p>Welcome to the master data system deck. Scroll down to inspect our real-time department processes, ownership metrics, systems, and measurable targets.</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to Explore</span>
+                    <div class="mouse"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Stats & Vision -->
+        <section id="vision">
+            <div class="glass-card" style="max-width: 900px; text-align: center;">
+                <span class="badge">Core Purpose</span>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Streamlining Petroleum Operations</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.15rem; margin-bottom: 2rem;">
+                    Piramal Petroleum Pvt. Ltd. is committed to absolute efficiency across all operational stages. From high-integrity chemical lab quality assays to optimized supply chain channels and precision dispatch networks, our teams maintain 100% compliance through rigorous checklist-driven execution.
+                </p>
+                
+                <div class="stats-row" style="margin-top: 3rem;">
+                    <div class="stat-card glass-card" style="padding: 1.5rem; margin-bottom: 0;">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3 id="stat-processes-count">0</h3>
+                            <p>Active Operations</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-card" style="padding: 1.5rem; margin-bottom: 0;">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3 id="stat-owners-count">0</h3>
+                            <p>Process Controllers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Operations Dashboard -->
+        <section id="dashboard" class="dashboard-section">
+            <div class="section-header">
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    Live Operations Sync
+                </div>
+                <h2>Process Directory</h2>
+                <p>Select any corporate process flow to inspect key operational metrics, system owners, and live resources.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Sidebar Nav -->
+                <div class="sidebar-controls" id="sidebar-controls">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Right Operation Board -->
+                <div class="dashboard-content" id="dashboard-view">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p>Syncing with Master Data Sheet...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Extra spacer to allow video scrolling to end gracefully -->
+        <section id="outro" style="min-height: 80vh; text-align: center;">
+            <div class="glass-card" style="max-width: 700px; padding: 3rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Systemized Execution</h2>
+                <p style="color: var(--text-secondary); line-height: 1.7;">
+                    Every department runs on pre-defined checklists and database trackers. By standardizing training videos and flowcharts, we ensure zero operational lag and consistent scaling.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo.jpg" alt="Piramal Logo" class="footer-logo-img">
+                    <div class="footer-logo">PIRAMAL PETROLEUM PVT. LTD.</div>
+                </div>
+                <p>© 2026 Piramal Petroleum Pvt. Ltd. All rights reserved. Operations Control Room Hub.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

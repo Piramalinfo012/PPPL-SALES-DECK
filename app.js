@@ -8,7 +8,7 @@ const playhead = { frame: 0 };
 
 // Generate paths for the 240 frames
 const currentFrame = index => 
-    `video_frames_30fps/frame_${index.toString().padStart(5, '0')}.png`;
+    `plant video_frames_30fps_jpg/frame_${index.toString().padStart(5, '0')}.jpg`;
 
 // Preload images for buttery smooth scrolling
 function preloadImages() {

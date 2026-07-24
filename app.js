@@ -230,16 +230,26 @@ function renderProcess(proc) {
                     <p><strong>Executive:</strong> ${proc.executive}</p>
                 </div>
                 
-                <div class="detail-card">
+                <div class="detail-card" style="word-break: break-word;">
                     <h4>Systems & Audits</h4>
-                    <p style="margin-bottom: 0.5rem;"><strong>Database:</strong> ${proc.db}</p>
-                    <p style="margin-bottom: 0.5rem;"><strong>Checklist:</strong> ${proc.checklist}</p>
+                    <p style="margin-bottom: 0.8rem;">
+                        <strong>Database:</strong> 
+                        ${isValidUrl(proc.db) 
+                            ? `<a href="${formatUrl(proc.db)}" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 500;">Open Database</a>` 
+                            : proc.db}
+                    </p>
+                    <p style="margin-bottom: 0.8rem;">
+                        <strong>Checklist:</strong> 
+                        ${isValidUrl(proc.checklist) 
+                            ? `<a href="${formatUrl(proc.checklist)}" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 500;">Open Checklist</a>` 
+                            : proc.checklist}
+                    </p>
                     <p><strong>Access Creds:</strong> ${proc.checklistAuth}</p>
                 </div>
                 
                 <div class="detail-card">
                     <h4>Resources & Links</h4>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
                         ${isValidUrl(proc.flowchart) ? `<a href="${formatUrl(proc.flowchart)}" target="_blank" class="link-btn">View Flowchart</a>` : ''}
                         ${isValidUrl(proc.fms) ? `<a href="${formatUrl(proc.fms)}" target="_blank" class="link-btn">Access F.M.S</a>` : ''}
                         ${isValidUrl(proc.db) ? `<a href="${formatUrl(proc.db)}" target="_blank" class="link-btn">Access Database (DB)</a>` : ''}
@@ -263,6 +273,24 @@ async function init() {
     preloadImages();
     
     setupScrollAnimation();
+    
+    // Setup Scroll Observer for 3D reveal animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll(".scroll-animate").forEach(el => {
+        observer.observe(el);
+    });
     
     // Fetch Spreadsheet Data immediately in parallel
     await fetchLiveSheetData();

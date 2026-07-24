@@ -10,22 +10,33 @@ const playhead = { frame: 0 };
 const currentFrame = index => 
     `plant video_frames_30fps_jpg/frame_${index.toString().padStart(5, '0')}.jpg`;
 
-// Preload images for buttery smooth scrolling
+// Load first frame immediately and rest of the images asynchronously in background (Non-blocking)
 function preloadImages() {
-    return new Promise((resolve) => {
-        let loadedCount = 0;
-        for (let i = 0; i < frameCount; i++) {
-            const img = new Image();
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === frameCount) {
-                    resolve();
-                }
-            };
-            img.src = currentFrame(i);
-            images.push(img);
-        }
-    });
+    // Pre-allocate slots in images array
+    for (let i = 0; i < frameCount; i++) {
+        images.push(null);
+    }
+
+    // 1. Load the first frame immediately for instant visual feedback
+    const firstImg = new Image();
+    firstImg.onload = () => {
+        images[0] = firstImg;
+        renderFrame();
+    };
+    firstImg.src = currentFrame(0);
+
+    // 2. Load the remaining frames progressively in the background
+    for (let i = 1; i < frameCount; i++) {
+        const img = new Image();
+        img.onload = () => {
+            images[i] = img;
+            // If user scrolled to this frame while it was loading, draw it
+            if (playhead.frame === i) {
+                renderFrame();
+            }
+        };
+        img.src = currentFrame(i);
+    }
 }
 
 // Adjust canvas to match device pixel ratio
@@ -37,7 +48,19 @@ function resizeCanvas() {
 
 // Draw the current frame onto the canvas
 function renderFrame() {
-    const activeImage = images[playhead.frame];
+    // Find closest loaded frame if the exact one is still downloading
+    let activeImage = images[playhead.frame];
+    
+    if (!activeImage) {
+        // Fallback: search backwards for the nearest loaded frame
+        for (let i = playhead.frame; i >= 0; i--) {
+            if (images[i]) {
+                activeImage = images[i];
+                break;
+            }
+        }
+    }
+    
     if (!activeImage) return;
 
     // Cover scale logic
@@ -236,11 +259,12 @@ async function init() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     
-    await preloadImages();
-    renderFrame();
+    // Start preloading images progressively in background (non-blocking)
+    preloadImages();
+    
     setupScrollAnimation();
     
-    // Fetch Spreadsheet Data
+    // Fetch Spreadsheet Data immediately in parallel
     await fetchLiveSheetData();
 }
 
